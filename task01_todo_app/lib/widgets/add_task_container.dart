@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task01_todo_app/utilities/constatns.dart';
+import 'package:task01_todo_app/constatns.dart';
 
 class AddTaskTextField extends StatelessWidget {
   const AddTaskTextField({
