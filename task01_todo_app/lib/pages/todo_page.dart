@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task01_todo_app/models/task.dart';
 import 'package:task01_todo_app/widgets/add_task_container.dart';
-import 'package:task01_todo_app/widgets/task_card.dart';
+import 'package:task01_todo_app/widgets/task_screen.dart';
 
-class TodoPage extends StatelessWidget {
+class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
+
+  @override
+  State<TodoPage> createState() => _TodoPageState();
+}
+
+class _TodoPageState extends State<TodoPage> {
+  var task = Task().taskList();
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +32,8 @@ class TodoPage extends StatelessWidget {
                 height: 10,
               ),
               const AddTaskTextField(),
-              const SizedBox(
-                height: 8,
-              ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Text(
-                      "Tasks",
-                      style: GoogleFonts.raleway(
-                          fontSize: 23, fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.center,
-                    ),
-                    const TaskCard()
-                  ],
-                ),
+              TaskScreen(
+                task_list: task,
               )
             ],
           ),

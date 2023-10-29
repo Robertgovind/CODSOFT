@@ -6,11 +6,19 @@ import 'package:task01_todo_app/widgets/editing_icons.dart';
 class TaskCard extends StatelessWidget {
   const TaskCard({
     super.key,
+    required this.title,
+    required this.date,
+    this.description,
+    this.isCompleted,
   });
-
+  final title;
+  final date;
+  final description;
+  final isCompleted;
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -25,17 +33,22 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Coding",
+                title,
                 style: GoogleFonts.raleway(
-                    fontSize: 22, fontWeight: FontWeight.w600),
+                  decoration: isCompleted
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Text(
-                "2023/10/30",
+                date,
                 style: GoogleFonts.raleway(
                     fontSize: 17, fontWeight: FontWeight.w300),
               ),
               Text(
-                'Complete the task given in internship',
+                description,
                 style: GoogleFonts.raleway(
                     fontSize: 21, fontWeight: FontWeight.w500),
               ),
@@ -44,11 +57,16 @@ class TaskCard extends StatelessWidget {
               ),
             ],
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               EditingIcons(
-                icon: Icons.check_box,
+                icon: isCompleted
+                    ? Icons.check_box
+                    : Icons.check_box_outline_blank,
+                color: isCompleted
+                    ? const Color.fromARGB(255, 7, 242, 15)
+                    : Colors.black,
               ),
               EditingIcons(
                 icon: Icons.edit_document,
