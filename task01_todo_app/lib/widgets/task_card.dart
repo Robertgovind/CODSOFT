@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:task01_todo_app/constatns.dart';
 import 'package:task01_todo_app/models/task.dart';
+import 'package:task01_todo_app/models/task_data.dart';
 import 'package:task01_todo_app/widgets/editing_icons.dart';
 
 class TaskCard extends StatefulWidget {
@@ -83,8 +85,15 @@ class _TaskCardState extends State<TaskCard> {
               const EditingIcons(
                 icon: Icons.edit_document,
               ),
-              const EditingIcons(
-                icon: Icons.delete,
+              GestureDetector(
+                onTap: () {
+                  Provider.of<TaskData>(context, listen: false)
+                      .deleteTask(widget.taskData);
+                },
+                child: const EditingIcons(
+                  icon: Icons.delete,
+                  color: Colors.red,
+                ),
               ),
             ],
           )

@@ -27,86 +27,100 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       child: ListView(
+        scrollDirection: Axis.vertical,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: kcardBGColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        const BorderSide(width: 2, color: kcustomBorderColor),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: kcardBGColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(width: 2, color: kcustomBorderColor),
                     ),
-                    borderSide: BorderSide(color: kcustomBorderColor, width: 3),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      borderSide:
+                          BorderSide(color: kcustomBorderColor, width: 3),
+                    ),
+                    hintText: 'Add task title',
+                    hintStyle: GoogleFonts.raleway(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
                   ),
-                  hintText: 'Add task title',
-                  hintStyle: GoogleFonts.raleway(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                  onChanged: (value) {
+                    taskTitle = value;
+                  },
                 ),
-                onChanged: (value) {
-                  taskTitle = value;
-                },
               ),
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: kcardBGColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        const BorderSide(width: 2, color: kcustomBorderColor),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: kcardBGColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(width: 2, color: kcustomBorderColor),
                     ),
-                    borderSide: BorderSide(color: kcustomBorderColor, width: 3),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      borderSide:
+                          BorderSide(color: kcustomBorderColor, width: 3),
+                    ),
+                    hintText: 'Add task date',
+                    hintStyle: GoogleFonts.raleway(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
                   ),
-                  hintText: 'Add task date',
-                  hintStyle: GoogleFonts.raleway(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                  onChanged: (value) {
+                    taskDate = value;
+                  },
                 ),
-                onChanged: (value) {
-                  taskDate = value;
-                },
               ),
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: kcardBGColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        const BorderSide(width: 2, color: kcustomBorderColor),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: kcardBGColor,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(width: 2, color: kcustomBorderColor),
                     ),
-                    borderSide: BorderSide(color: kcustomBorderColor, width: 3),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      borderSide:
+                          BorderSide(color: kcustomBorderColor, width: 3),
+                    ),
+                    hintText: 'Add task description',
+                    hintStyle: GoogleFonts.raleway(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
                   ),
-                  hintText: 'Add task description',
-                  hintStyle: GoogleFonts.raleway(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
+                  onChanged: (value) {
+                    taskDescription = value;
+                  },
                 ),
-                onChanged: (value) {
-                  taskDescription = value;
-                },
               ),
               Container(
+                margin: const EdgeInsets.symmetric(vertical: 12),
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ButtonStyle(
@@ -114,14 +128,32 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
                         (states) => Colors.lightBlueAccent),
                   ),
                   onPressed: () {
-                    Provider.of<TaskData>(context)
+                    Provider.of<TaskData>(context, listen: false)
                         .addNewTask(taskTitle, taskDate, taskDescription);
-                    print(taskTitle);
-
                     Navigator.pop(context);
                   },
                   child: Text(
                     'Add',
+                    style: GoogleFonts.raleway(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 12),
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => const Color.fromARGB(255, 84, 104, 113)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Cancel',
                     style: GoogleFonts.raleway(
                         color: Colors.black,
                         fontSize: 18,

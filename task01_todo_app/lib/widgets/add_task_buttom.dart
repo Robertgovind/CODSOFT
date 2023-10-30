@@ -23,6 +23,7 @@ class _AddTaskTextFieldState extends State<AddTaskTextField> {
         onPressed: () {
           showModalBottomSheet(
               isDismissible: true,
+              isScrollControlled: true,
               context: (context),
               builder: (context) {
                 return BottomSheetContent();
