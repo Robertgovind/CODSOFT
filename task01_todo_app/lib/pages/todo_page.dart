@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task01_todo_app/models/task.dart';
 import 'package:task01_todo_app/widgets/add_task_container.dart';
 import 'package:task01_todo_app/widgets/task_screen.dart';
 
@@ -12,8 +11,6 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  var task = Task().taskList();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,9 +29,16 @@ class _TodoPageState extends State<TodoPage> {
                 height: 10,
               ),
               const AddTaskTextField(),
-              TaskScreen(
-                task_list: task,
-              )
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  " Tasks",
+                  style: GoogleFonts.raleway(
+                      fontSize: 23, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const TaskScreen()
             ],
           ),
         ),

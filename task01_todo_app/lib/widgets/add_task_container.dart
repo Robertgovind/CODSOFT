@@ -16,7 +16,7 @@ class AddTaskTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           borderSide: const BorderSide(color: kcustomBorderColor, width: 2),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+        contentPadding:const  EdgeInsets.symmetric(horizontal: 12),
         hintText: 'Add a new task',
         hintStyle: GoogleFonts.raleway(
           fontSize: 17,

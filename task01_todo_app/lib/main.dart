@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task01_todo_app/models/task_data.dart';
 
 import 'package:task01_todo_app/pages/todo_page.dart';
 
@@ -11,11 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "ToDo app",
-      home: TodoPage(),
-      theme: ThemeData(brightness: Brightness.light),
+    return ChangeNotifierProvider(
+      create: (context) {
+        return TaskData();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ToDo app",
+        home: TodoPage(),
+        theme: ThemeData(brightness: Brightness.light),
+      ),
     );
   }
 }

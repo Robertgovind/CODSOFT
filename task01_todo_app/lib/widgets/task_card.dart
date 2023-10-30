@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task01_todo_app/constatns.dart';
+import 'package:task01_todo_app/models/task.dart';
 import 'package:task01_todo_app/widgets/editing_icons.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
     super.key,
-    required this.title,
-    required this.date,
-    this.description,
-    this.isCompleted,
+    required this.taskData,
   });
-  final title;
-  final date;
-  final description;
-  final isCompleted;
+  final Task taskData;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,9 +29,9 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
+                taskData.taskTitle,
                 style: GoogleFonts.raleway(
-                  decoration: isCompleted
+                  decoration: taskData.isCompleted
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
                   fontSize: 22,
@@ -43,12 +39,12 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
               Text(
-                date,
+                taskData.date,
                 style: GoogleFonts.raleway(
                     fontSize: 17, fontWeight: FontWeight.w300),
               ),
               Text(
-                description,
+                taskData.description,
                 style: GoogleFonts.raleway(
                     fontSize: 21, fontWeight: FontWeight.w500),
               ),
@@ -61,17 +57,17 @@ class TaskCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               EditingIcons(
-                icon: isCompleted
+                icon: taskData.isCompleted
                     ? Icons.check_box
                     : Icons.check_box_outline_blank,
-                color: isCompleted
+                color: taskData.isCompleted
                     ? const Color.fromARGB(255, 7, 242, 15)
                     : Colors.black,
               ),
-              EditingIcons(
+              const EditingIcons(
                 icon: Icons.edit_document,
               ),
-              EditingIcons(
+              const EditingIcons(
                 icon: Icons.delete,
               ),
             ],
