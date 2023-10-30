@@ -17,4 +17,11 @@ class TaskData extends ChangeNotifier {
         date: '2023/11/30',
         description: 'At evening need to play football'),
   ];
+
+  void addNewTask(String taskTitle, String taskDate, String taskDescription) {
+    final newTask = Task(
+        taskTitle: taskTitle, date: taskDate, description: taskDescription);
+    taskList.add(newTask);
+    notifyListeners();
+  }
 }

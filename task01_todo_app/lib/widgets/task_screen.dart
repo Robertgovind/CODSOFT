@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task01_todo_app/models/task_data.dart';
-
 import 'package:task01_todo_app/widgets/task_card.dart';
 
 class TaskScreen extends StatefulWidget {

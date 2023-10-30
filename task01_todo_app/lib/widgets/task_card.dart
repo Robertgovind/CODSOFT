@@ -4,7 +4,7 @@ import 'package:task01_todo_app/constatns.dart';
 import 'package:task01_todo_app/models/task.dart';
 import 'package:task01_todo_app/widgets/editing_icons.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   const TaskCard({
     super.key,
     required this.taskData,
@@ -12,9 +12,20 @@ class TaskCard extends StatelessWidget {
   final Task taskData;
 
   @override
+  State<TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  void tickTask() {
+    setState(() {
+      widget.taskData.isDone();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -29,9 +40,9 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                taskData.taskTitle,
+                widget.taskData.taskTitle,
                 style: GoogleFonts.raleway(
-                  decoration: taskData.isCompleted
+                  decoration: widget.taskData.isCompleted
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
                   fontSize: 22,
@@ -39,12 +50,12 @@ class TaskCard extends StatelessWidget {
                 ),
               ),
               Text(
-                taskData.date,
+                widget.taskData.date,
                 style: GoogleFonts.raleway(
                     fontSize: 17, fontWeight: FontWeight.w300),
               ),
               Text(
-                taskData.description,
+                widget.taskData.description,
                 style: GoogleFonts.raleway(
                     fontSize: 21, fontWeight: FontWeight.w500),
               ),
@@ -56,13 +67,18 @@ class TaskCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              EditingIcons(
-                icon: taskData.isCompleted
-                    ? Icons.check_box
-                    : Icons.check_box_outline_blank,
-                color: taskData.isCompleted
-                    ? const Color.fromARGB(255, 7, 242, 15)
-                    : Colors.black,
+              GestureDetector(
+                onTap: () {
+                  tickTask();
+                },
+                child: EditingIcons(
+                  icon: widget.taskData.isCompleted
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank,
+                  color: widget.taskData.isCompleted
+                      ? const Color.fromARGB(255, 7, 242, 15)
+                      : Colors.black,
+                ),
               ),
               const EditingIcons(
                 icon: Icons.edit_document,

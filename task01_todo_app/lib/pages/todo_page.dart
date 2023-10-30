@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task01_todo_app/widgets/add_task_container.dart';
+import 'package:provider/provider.dart';
+import 'package:task01_todo_app/models/task_data.dart';
+import 'package:task01_todo_app/widgets/add_task_buttom.dart';
 import 'package:task01_todo_app/widgets/task_screen.dart';
 
 class TodoPage extends StatefulWidget {
@@ -32,7 +34,7 @@ class _TodoPageState extends State<TodoPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  " Tasks",
+                  "${Provider.of<TaskData>(context).taskList.length} Tasks",
                   style: GoogleFonts.raleway(
                       fontSize: 23, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,

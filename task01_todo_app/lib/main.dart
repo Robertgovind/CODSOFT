@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "ToDo app",
-        home: TodoPage(),
+        home: const TodoPage(),
         theme: ThemeData(brightness: Brightness.light),
       ),
     );
