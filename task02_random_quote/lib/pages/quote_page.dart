@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 
 class QuotesPage extends StatefulWidget {
   const QuotesPage({super.key});
@@ -10,12 +9,8 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
-  var httpUri = Uri(scheme: 'https', host: 'type.fit', path: '/api/quotes');
-
-  void getData() async {
-    var response = await http.get(httpUri);
-    print(response.body);
-  }
+  var httpUri =
+      Uri(scheme: 'https', host: 'api.adviceslip.com', path: '/advice');
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +55,10 @@ class _QuotesPageState extends State<QuotesPage> {
                 height: 500,
                 child: Center(
                   child: Text(
-                    "I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best",
+                    '',
                     style: GoogleFonts.roboto(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
                   ),
                 ),
@@ -90,9 +85,7 @@ class _QuotesPageState extends State<QuotesPage> {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {
-                        getData();
-                      },
+                      onPressed: () {},
                       icon: const Icon(
                         Icons.bookmark,
                         size: 30,
@@ -104,9 +97,7 @@ class _QuotesPageState extends State<QuotesPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: GestureDetector(
-                  onTap: () {
-                    getData();
-                  },
+                  onTap: () {},
                   child: const Icon(
                     Icons.menu,
                     size: 30,
