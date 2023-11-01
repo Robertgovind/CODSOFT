@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
-class QuotesPage extends StatelessWidget {
+class QuotesPage extends StatefulWidget {
   const QuotesPage({super.key});
+
+  @override
+  State<QuotesPage> createState() => _QuotesPageState();
+}
+
+class _QuotesPageState extends State<QuotesPage> {
+  void getData() async {
+    var result = await http.get(
+        'https://api.api-ninjas.com/v1/quotes?category=inspirational' as Uri);
+    print(result.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +31,17 @@ class QuotesPage extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Quote of the day',
-                style: GoogleFonts.roboto(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white54),
+              Padding(
+                padding: const EdgeInsets.only(left: 60),
+                child: Text(
+                  'Quote of the day',
+                  style: GoogleFonts.roboto(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white54),
+                ),
               ),
               Container(
                 padding: const EdgeInsets.all(
@@ -52,7 +68,7 @@ class QuotesPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -65,18 +81,34 @@ class QuotesPage extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: Colors.black),
                         ),
-                        SizedBox(width: 10),
-                        Icon(
+                        const SizedBox(width: 10),
+                        const Icon(
                           Icons.share_sharp,
                           size: 30,
                         )
                       ],
                     ),
-                    Icon(
-                      Icons.bookmark,
-                      size: 35,
+                    IconButton(
+                      onPressed: () {
+                        getData();
+                      },
+                      icon: const Icon(
+                        Icons.bookmark,
+                      ),
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: GestureDetector(
+                  onTap: () {
+                    getData();
+                  },
+                  child: const Icon(
+                    Icons.menu,
+                    size: 30,
+                  ),
                 ),
               )
             ],

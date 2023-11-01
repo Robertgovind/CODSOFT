@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task02_random_quote/pages/faveriote_quote.dart';
 import 'package:task02_random_quote/pages/home.dart';
 import 'package:task02_random_quote/pages/quote_page.dart';
 
