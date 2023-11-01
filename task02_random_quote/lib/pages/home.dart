@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+import 'package:task02_random_quote/models/madal_class.dart';
+import 'package:task02_random_quote/pages/quote_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,17 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var object = QuotesClass();
   var quotes;
-
-  void getQuotes() async {
-    var response = await http.get(
-      Uri.parse('https://api.adviceslip.com/advice'),
-    );
-
-    quotes = jsonDecode(response.body);
-
-    print(quotes);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +55,11 @@ class _HomeState extends State<Home> {
                 margin: const EdgeInsets.only(bottom: 10),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.blueAccent)),
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => Colors.blueAccent),
+                  ),
                   onPressed: () {
-                    getQuotes();
-                    if (quotes != null) {
-                      Navigator.pushNamed(context, '/QuotesPage');
-                      print(quotes);
-                    }
+                    Navigator.pushNamed(context, '/QuotesPage');
                   },
                   child: Text(
                     'Get Started',

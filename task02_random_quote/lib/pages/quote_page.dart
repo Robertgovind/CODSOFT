@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class QuotesPage extends StatefulWidget {
-  const QuotesPage({super.key});
+  const QuotesPage({
+    super.key,
+  });
 
   @override
   State<QuotesPage> createState() => _QuotesPageState();
 }
 
 class _QuotesPageState extends State<QuotesPage> {
-  var httpUri =
-      Uri(scheme: 'https', host: 'api.adviceslip.com', path: '/advice');
+  var quotes;
+
+  void getQuotes() async {
+    var response = await http.get(
+      Uri.parse('https://api.adviceslip.com/advice'),
+    );
+    quotes = jsonDecode(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +64,15 @@ class _QuotesPageState extends State<QuotesPage> {
                 ),
                 height: 500,
                 child: Center(
-                  child: Text(
-                    '',
-                    style: GoogleFonts.roboto(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
+                  child: quotes != null
+                      ? Text(
+                          quotes['slip']['advice'],
+                          style: GoogleFonts.roboto(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        )
+                      : Text(''),
                 ),
               ),
               Padding(
@@ -84,8 +96,19 @@ class _QuotesPageState extends State<QuotesPage> {
                         )
                       ],
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          getQuotes();
+                          print(quotes);
+                        });
+                      },
+                      child: const Text('Generate'),
+                    ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        getQuotes();
+                      },
                       icon: const Icon(
                         Icons.bookmark,
                         size: 30,

@@ -4,7 +4,5 @@ class QuotesClass {
 
   QuotesClass({this.text, this.author});
 
-  
-
-  
+  List<String> quotesList = [];
 }
