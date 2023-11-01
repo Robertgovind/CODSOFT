@@ -10,10 +10,11 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
+  var httpUri = Uri(scheme: 'https', host: 'type.fit', path: '/api/quotes');
+
   void getData() async {
-    var result = await http.get(
-        'https://api.api-ninjas.com/v1/quotes?category=inspirational' as Uri);
-    print(result.body);
+    var response = await http.get(httpUri);
+    print(response.body);
   }
 
   @override
@@ -94,6 +95,7 @@ class _QuotesPageState extends State<QuotesPage> {
                       },
                       icon: const Icon(
                         Icons.bookmark,
+                        size: 30,
                       ),
                     ),
                   ],
