@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:task02_random_quote/models/modal_class.dart';
 
 class FaveriotePage extends StatefulWidget {
   const FaveriotePage({super.key});
@@ -9,11 +10,16 @@ class FaveriotePage extends StatefulWidget {
 }
 
 class _FaveriotePageState extends State<FaveriotePage> {
+  var qList = QuotesClass().quotesList;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Bookmarked'),
+        ),
         body: ListView.builder(
+          itemCount: qList.length,
           itemBuilder: (context, index) {
             return Container(
               padding: const EdgeInsets.all(
@@ -28,8 +34,8 @@ class _FaveriotePageState extends State<FaveriotePage> {
                 ],
               ),
               child: Center(
-                child: Text (
-                  "I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle.",
+                child: Text(
+                  qList[index],
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -38,7 +44,6 @@ class _FaveriotePageState extends State<FaveriotePage> {
               ),
             );
           },
-          
         ),
       ),
     );

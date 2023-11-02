@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:task02_random_quote/models/modal_class.dart';
 
 class QuotesPage extends StatefulWidget {
   const QuotesPage({
@@ -13,7 +14,15 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
+  var qList = QuotesClass();
   var quotes;
+  bool isBookmarked = false;
+
+  void toggleBookmarked() {
+    setState(() {
+      isBookmarked = !isBookmarked;
+    });
+  }
 
   void getQuotes() async {
     var response = await http.get(
@@ -72,7 +81,13 @@ class _QuotesPageState extends State<QuotesPage> {
                             fontSize: 20,
                           ),
                         )
-                      : Text(''),
+                      : Text(
+                          'Loading......',
+                          style: GoogleFonts.roboto(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
                 ),
               ),
               Padding(
@@ -100,32 +115,45 @@ class _QuotesPageState extends State<QuotesPage> {
                       onPressed: () {
                         setState(() {
                           getQuotes();
-                          print(quotes);
+                          isBookmarked = false;
                         });
                       },
                       child: const Text('Generate'),
                     ),
                     IconButton(
                       onPressed: () {
-                        getQuotes();
+                        qList.quotesList.add(quotes['slip']['advice']);
+                        toggleBookmarked();
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.bookmark,
                         size: 30,
+                        color: isBookmarked ? Colors.yellow : Colors.black,
                       ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.menu,
-                    size: 30,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.menu,
+                        size: 30,
+                      ),
+                    ),
                   ),
-                ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/FaveriotesPage');
+                    },
+                    child: const Text('Bookmarked'),
+                  ),
+                ],
               )
             ],
           ),

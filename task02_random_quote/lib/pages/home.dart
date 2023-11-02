@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:task02_random_quote/models/madal_class.dart';
+import 'package:task02_random_quote/models/modal_class.dart';
 import 'package:task02_random_quote/pages/quote_page.dart';
 
 class Home extends StatefulWidget {
