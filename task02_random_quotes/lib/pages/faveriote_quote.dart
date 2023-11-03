@@ -11,12 +11,13 @@ class FaveriotePage extends StatefulWidget {
 
 class _FaveriotePageState extends State<FaveriotePage> {
   var qList = QuotesClass.quotesList;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title:const Text('Bookmarked'),
+          title: const Text('Bookmarked'),
         ),
         body: ListView.builder(
           itemCount: qList.length,

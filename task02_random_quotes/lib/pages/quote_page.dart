@@ -15,6 +15,8 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
+ 
+
   var qList = QuotesClass.quotesList;
   var quoteObject = QuotesClass();
   var quotes;
@@ -137,6 +139,7 @@ class _QuotesPageState extends State<QuotesPage> {
                         setState(() {
                           if (isBookmarked) {
                             qList.add(quotes['slip']['advice']);
+                            
                           } else {
                             quoteObject
                                 .removeFaveriote(quotes['slip']['advice']);
