@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/modal_class.dart';
 
 class FaveriotePage extends StatefulWidget {
@@ -11,6 +12,14 @@ class FaveriotePage extends StatefulWidget {
 
 class _FaveriotePageState extends State<FaveriotePage> {
   var qList = QuotesClass.quotesList;
+  List<String>? favQuotes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getQuotes();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +29,7 @@ class _FaveriotePageState extends State<FaveriotePage> {
           title: const Text('Bookmarked'),
         ),
         body: ListView.builder(
-          itemCount: qList.length,
+          itemCount: favQuotes?.length,
           itemBuilder: (context, index) {
             return Container(
               padding: const EdgeInsets.all(
@@ -36,7 +45,7 @@ class _FaveriotePageState extends State<FaveriotePage> {
               ),
               child: Center(
                 child: Text(
-                  qList[index],
+                  favQuotes![index],
                   style: GoogleFonts.roboto(
                     color: Colors.white,
                     fontSize: 18,
@@ -48,5 +57,11 @@ class _FaveriotePageState extends State<FaveriotePage> {
         ),
       ),
     );
+  }
+
+  void getQuotes() async {
+    SharedPreferences qts = await SharedPreferences.getInstance();
+    favQuotes = qts.getStringList('quotes');
+    setState(() {});
   }
 }

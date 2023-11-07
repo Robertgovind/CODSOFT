@@ -34,7 +34,13 @@ class _QuotesPageState extends State<QuotesPage> {
     setState(() {});
   }
 
-  void shareQuote() {}
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    addQuote();
+    getQuote();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +146,7 @@ class _QuotesPageState extends State<QuotesPage> {
                             SharedPreferences qts =
                                 await SharedPreferences.getInstance();
                             qts.setStringList('quotes', qList);
+                            print(qts.getStringList('quotes'));
                           } else {
                             setState(() async {
                               quoteObject
@@ -147,6 +154,7 @@ class _QuotesPageState extends State<QuotesPage> {
                               SharedPreferences qts =
                                   await SharedPreferences.getInstance();
                               qts.setStringList('quotes', qList);
+                              print(qts.getStringList('quotes'));
                             });
                           }
                         });
@@ -195,11 +203,20 @@ class _QuotesPageState extends State<QuotesPage> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void addQuote() async {
+    SharedPreferences qts = await SharedPreferences.getInstance();
+    qts.setString('quote', quotes['slip']['advice']);
+  }
+
+  void getQuote() async {
+    SharedPreferences qts = await SharedPreferences.getInstance();
   }
 }
