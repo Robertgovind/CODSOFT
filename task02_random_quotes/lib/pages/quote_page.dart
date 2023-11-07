@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/modal_class.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -15,13 +16,10 @@ class QuotesPage extends StatefulWidget {
 }
 
 class _QuotesPageState extends State<QuotesPage> {
- 
-
   var qList = QuotesClass.quotesList;
   var quoteObject = QuotesClass();
   var quotes;
   bool isBookmarked = false;
-
   void toggleBookmarked() {
     setState(() {
       isBookmarked = !isBookmarked;
@@ -136,13 +134,20 @@ class _QuotesPageState extends State<QuotesPage> {
                     IconButton(
                       onPressed: () {
                         toggleBookmarked();
-                        setState(() {
+                        setState(() async {
                           if (isBookmarked) {
                             qList.add(quotes['slip']['advice']);
-                            
+                            SharedPreferences qts =
+                                await SharedPreferences.getInstance();
+                            qts.setStringList('quotes', qList);
                           } else {
-                            quoteObject
-                                .removeFaveriote(quotes['slip']['advice']);
+                            setState(() async {
+                              quoteObject
+                                  .removeFaveriote(quotes['slip']['advice']);
+                              SharedPreferences qts =
+                                  await SharedPreferences.getInstance();
+                              qts.setStringList('quotes', qList);
+                            });
                           }
                         });
                       },
