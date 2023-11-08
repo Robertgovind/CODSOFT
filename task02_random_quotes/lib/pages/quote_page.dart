@@ -21,7 +21,7 @@ class _QuotesPageState extends State<QuotesPage> {
   var quotes;
   bool isBookmarked = false;
   String savedQuote = '';
-  List<String> favQuotes = [];
+  List<String>? favQuotes ;
 
   void toggleBookmarked() {
     setState(() {
@@ -154,15 +154,15 @@ class _QuotesPageState extends State<QuotesPage> {
                         toggleBookmarked();
                         setState(() async {
                           if (isBookmarked) {
-                            favQuotes.add(quotes['slip']['advice']);
+                            favQuotes?.add(quotes['slip']['advice']);
                             SharedPreferences qts =
                                 await SharedPreferences.getInstance();
-                            qts.setStringList('quoteList', favQuotes);
+                            qts.setStringList('quoteList', favQuotes!);
                           } else {
-                            favQuotes.remove(quotes['slip']['advice']);
+                            favQuotes?.remove(quotes['slip']['advice']);
                             SharedPreferences qts =
                                 await SharedPreferences.getInstance();
-                            qts.setStringList('quoteList', favQuotes);
+                            qts.setStringList('quoteList', favQuotes!);
                           }
                         });
                       },
@@ -231,12 +231,12 @@ class _QuotesPageState extends State<QuotesPage> {
 
   void setFavQuotes() async {
     SharedPreferences qtsList = await SharedPreferences.getInstance();
-    qtsList.setStringList('quoteList', favQuotes);
+    qtsList.setStringList('quoteList', favQuotes!);
   }
 
   void getFavQuotes() async {
     SharedPreferences qtsList = await SharedPreferences.getInstance();
-    favQuotes = qtsList.getStringList('quoteList')!;
+    favQuotes = qtsList.getStringList('quoteList');
     setState(() {});
   }
 }

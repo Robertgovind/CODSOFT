@@ -25,7 +25,9 @@ class _FaveriotePageState extends State<FaveriotePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 94, 142, 205),
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 94, 142, 205),
           title: const Text('Bookmarked'),
         ),
         body: ListView.builder(
