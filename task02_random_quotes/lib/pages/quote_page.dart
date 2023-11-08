@@ -20,6 +20,9 @@ class _QuotesPageState extends State<QuotesPage> {
   var quoteObject = QuotesClass();
   var quotes;
   bool isBookmarked = false;
+  String savedQuote = '';
+  List<String> favQuotes = [];
+
   void toggleBookmarked() {
     setState(() {
       isBookmarked = !isBookmarked;
@@ -36,10 +39,12 @@ class _QuotesPageState extends State<QuotesPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getQuotes();
     addQuote();
     getQuote();
+
+    getFavQuotes();
   }
 
   @override
@@ -60,15 +65,22 @@ class _QuotesPageState extends State<QuotesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 60),
-                child: Text(
-                  'Quote of the day',
-                  style: GoogleFonts.roboto(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white54),
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Quote of the day'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Random Quote'),
+                      ),
+                    ],
+                  )),
               Container(
                 padding: const EdgeInsets.all(
                   (25),
@@ -142,20 +154,15 @@ class _QuotesPageState extends State<QuotesPage> {
                         toggleBookmarked();
                         setState(() async {
                           if (isBookmarked) {
-                            qList.add(quotes['slip']['advice']);
+                            favQuotes.add(quotes['slip']['advice']);
                             SharedPreferences qts =
                                 await SharedPreferences.getInstance();
-                            qts.setStringList('quotes', qList);
-                            print(qts.getStringList('quotes'));
+                            qts.setStringList('quoteList', favQuotes);
                           } else {
-                            setState(() async {
-                              quoteObject
-                                  .removeFaveriote(quotes['slip']['advice']);
-                              SharedPreferences qts =
-                                  await SharedPreferences.getInstance();
-                              qts.setStringList('quotes', qList);
-                              print(qts.getStringList('quotes'));
-                            });
+                            favQuotes.remove(quotes['slip']['advice']);
+                            SharedPreferences qts =
+                                await SharedPreferences.getInstance();
+                            qts.setStringList('quoteList', favQuotes);
                           }
                         });
                       },
@@ -218,5 +225,18 @@ class _QuotesPageState extends State<QuotesPage> {
 
   void getQuote() async {
     SharedPreferences qts = await SharedPreferences.getInstance();
+    savedQuote = qts.getString('quote').toString();
+    setState(() {});
+  }
+
+  void setFavQuotes() async {
+    SharedPreferences qtsList = await SharedPreferences.getInstance();
+    qtsList.setStringList('quoteList', favQuotes);
+  }
+
+  void getFavQuotes() async {
+    SharedPreferences qtsList = await SharedPreferences.getInstance();
+    favQuotes = qtsList.getStringList('quoteList')!;
+    setState(() {});
   }
 }

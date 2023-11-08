@@ -61,7 +61,7 @@ class _FaveriotePageState extends State<FaveriotePage> {
 
   void getQuotes() async {
     SharedPreferences qts = await SharedPreferences.getInstance();
-    favQuotes = qts.getStringList('quotes');
+    favQuotes = qts.getStringList('quoteList');
     setState(() {});
   }
 }
