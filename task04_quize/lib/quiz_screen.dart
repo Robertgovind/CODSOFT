@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:task04_quize/constants.dart';
+import 'package:task04_quize/widgets/options.dart';
+import 'package:task04_quize/widgets/questions.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -11,7 +14,7 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  String Questions = '';
+  String questions = '';
   void getQuestions() async {
     var response = await http.get(
       Uri.parse('https://opentdb.com/api.php?amount=10'),
@@ -33,65 +36,64 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
         child: Column(
           children: [
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 80,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: Colors.purple),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    getQuestions();
-                  },
-                  child: Text('get'),
-                ),
-              ),
+            const QuestionsContainer(
+              question: 'Which of the following is a fruit?',
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Expanded(
               child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  border: Border.all(width: 3, color: Colors.purple),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: Column(children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.purple),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+                child: const Column(
+                  children: [
+                    OptionsContainer(
+                      lead: 'A',
+                      optionText: 'Apple',
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.purple),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.purple),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+                    OptionsContainer(
+                      lead: 'B',
+                      optionText: 'Aeroplane',
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 3, color: Colors.purple),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
-                ]),
+                    OptionsContainer(
+                      lead: 'C',
+                      optionText: 'Train',
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    OptionsContainer(
+                      lead: 'D',
+                      optionText: 'Stomach',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateColor.resolveWith((states) => kButtonColor),
+                ),
+                onPressed: () {
+                  getQuestions();
+                },
+                child: const Text(
+                  'Next Question',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
             ),
           ],
