@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OptionsContainer extends StatelessWidget {
+class OptionsContainer extends StatefulWidget {
   const OptionsContainer({
     super.key,
     required this.lead,
@@ -9,6 +9,11 @@ class OptionsContainer extends StatelessWidget {
   final lead;
   final optionText;
 
+  @override
+  State<OptionsContainer> createState() => _OptionsContainerState();
+}
+
+class _OptionsContainerState extends State<OptionsContainer> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -24,7 +29,7 @@ class OptionsContainer extends StatelessWidget {
               CircleAvatar(
                 radius: 25,
                 child: Text(
-                  lead,
+                  widget.lead,
                   style: const TextStyle(fontSize: 25),
                 ),
               ),
@@ -33,7 +38,7 @@ class OptionsContainer extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  optionText,
+                  widget.optionText,
                   style: const TextStyle(fontSize: 22, color: Colors.white),
                 ),
               ),

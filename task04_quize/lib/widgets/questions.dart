@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
-class QuestionsContainer extends StatelessWidget {
+class QuestionsContainer extends StatefulWidget {
   const QuestionsContainer({
     super.key,
     required this.question,
+    required this.number,
   });
   final question;
+  final number;
+
+  @override
+  State<QuestionsContainer> createState() => _QuestionsContainerState();
+}
+
+class _QuestionsContainerState extends State<QuestionsContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,10 +29,17 @@ class QuestionsContainer extends StatelessWidget {
         border: Border.all(width: 3, color: Colors.purple),
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Text(
-        question,
-        style: const TextStyle(
-            fontSize: 23, fontWeight: FontWeight.w500, color: Colors.white),
+      child: Column(
+        children: [
+          CircleAvatar(
+            child: Text(widget.number.toString()),
+          ),
+          Text(
+            widget.question,
+            style: const TextStyle(
+                fontSize: 23, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
       ),
     );
   }
