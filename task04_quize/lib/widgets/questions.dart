@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task04_quize/constants.dart';
 
 class QuestionsContainer extends StatefulWidget {
   const QuestionsContainer({
@@ -33,6 +34,7 @@ class _QuestionsContainerState extends State<QuestionsContainer> {
         children: [
           CircleAvatar(
             child: Text(widget.number.toString()),
+            backgroundColor:kButtonColor,
           ),
           Text(
             widget.question,
