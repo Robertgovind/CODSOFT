@@ -5,9 +5,11 @@ class OptionsContainer extends StatefulWidget {
     super.key,
     required this.lead,
     required this.optionText,
+    this.ansColor,
   });
   final lead;
   final optionText;
+  final ansColor;
 
   @override
   State<OptionsContainer> createState() => _OptionsContainerState();
@@ -23,10 +25,11 @@ class _OptionsContainerState extends State<OptionsContainer> {
           borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             children: [
               CircleAvatar(
+                backgroundColor: widget.ansColor,
                 radius: 25,
                 child: Text(
                   widget.lead,

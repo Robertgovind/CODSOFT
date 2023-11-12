@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:task04_quize/constants.dart';
+import 'package:task04_quize/screens/result_screen.dart';
 import 'package:task04_quize/screens/splash_screen.dart';
 import 'package:task04_quize/widgets/options.dart';
 import 'package:task04_quize/widgets/questions.dart';
@@ -18,13 +19,17 @@ class _QuizScreenState extends State<QuizScreen> {
   bool decideScreen = false;
   var res;
   String question = '';
-  String optionA = '';
-  String optionB = '';
-  String optionC = '';
-  String optionD = '';
-  int questionNumber = 1;
+  int questionNumber = 0;
+
+  String cAnswer = 'correct_answer';
+  String iAnswer = 'incorrect_answers';
+
+  Map<String, dynamic>? ques;
 
   int q = 0, a = 0, b = 0, c = 0;
+
+  bool isColoured = false;
+  int score = 0;
 
   @override
   void initState() {
@@ -36,7 +41,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void getQuestions() async {
     var response = await http.get(
-      Uri.parse('https://opentdb.com/api.php?amount=10'),
+      Uri.parse('https://opentdb.com/api.php?amount=10&type=multiple'),
     );
     res = jsonDecode(response.body);
     print(response.body);
@@ -47,15 +52,12 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void assignQuestion() {
-    setState(() {
-      if (res != null) {
-        question = res['results'][q]['question'];
-        optionA = res['results'][q]['correct_answer'];
-        optionB = res['results'][a]['incorrect_answers'][0];
-        optionC = res['results'][b]['incorrect_answers'][1];
-        optionD = res['results'][c]['incorrect_answers'][2];
-      }
-    });
+    if (res != null) {
+      question = res['results'][q]['question'];
+      ques = {iAnswer: res['results'][a][iAnswer]};
+      ques?.addAll({cAnswer: res['results'][q][cAnswer]});
+    }
+    setState(() {});
   }
 
   @override
@@ -87,30 +89,61 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       child: Column(
                         children: [
-                          OptionsContainer(
-                            lead: 'A',
-                            optionText: optionA,
+                          GestureDetector(
+                            onTap: () {
+                              isColoured = !isColoured;
+                              score += 10;
+                              setState(() {});
+                            },
+                            child: OptionsContainer(
+                              lead: 'A',
+                              optionText: ques?[cAnswer] ?? '',
+                              ansColor:
+                                  isColoured ? Colors.green : Colors.white,
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          OptionsContainer(
-                            lead: 'B',
-                            optionText: optionB,
+                          GestureDetector(
+                            onTap: () {
+                              isColoured = !isColoured;
+                              setState(() {});
+                            },
+                            child: OptionsContainer(
+                              lead: 'B',
+                              optionText: ques?[iAnswer][0] ?? '',
+                              ansColor: isColoured ? Colors.red : Colors.white,
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          OptionsContainer(
-                            lead: 'C',
-                            optionText: optionC,
+                          GestureDetector(
+                            onTap: () {
+                              isColoured = !isColoured;
+                              setState(() {});
+                            },
+                            child: OptionsContainer(
+                              lead: 'C',
+                              optionText: ques?[iAnswer][1] ?? '',
+                              ansColor: isColoured ? Colors.red : Colors.white,
+                            ),
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          OptionsContainer(
-                            lead: 'D',
-                            optionText: optionD,
+                          GestureDetector(
+                            onTap: () {
+                              isColoured = !isColoured;
+
+                              setState(() {});
+                            },
+                            child: OptionsContainer(
+                              lead: 'D',
+                              optionText: ques?[iAnswer][2] ?? '',
+                              ansColor: isColoured ? Colors.red : Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -123,20 +156,34 @@ class _QuizScreenState extends State<QuizScreen> {
                         backgroundColor: MaterialStateColor.resolveWith(
                             (states) => kButtonColor),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          q++;
-                          a++;
-                          b++;
-                          c++;
-                          questionNumber++;
-                          assignQuestion();
-                        });
-                      },
-                      child: const Text(
-                        'Next Question',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
+                      onPressed: questionNumber <= 5
+                          ? () {
+                              setState(() {
+                                q++;
+                                a++;
+                                b++;
+                                c++;
+                                questionNumber++;
+                                assignQuestion();
+                              });
+                            }
+                          : () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const ResultScreen();
+                              }));
+                            },
+                      child: questionNumber <= 5
+                          ? const Text(
+                              'Next Question',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            )
+                          : const Text(
+                              'View Result',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
                     ),
                   ),
                 ],

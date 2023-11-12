@@ -30,18 +30,23 @@ class _QuestionsContainerState extends State<QuestionsContainer> {
         border: Border.all(width: 3, color: Colors.purple),
         borderRadius: BorderRadius.circular(25),
       ),
-      child: Column(
-        children: [
-          CircleAvatar(
-            child: Text(widget.number.toString()),
-            backgroundColor:kButtonColor,
-          ),
-          Text(
-            widget.question,
-            style: const TextStyle(
-                fontSize: 23, fontWeight: FontWeight.w500, color: Colors.white),
-          ),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            CircleAvatar(
+              child: Text(widget.number.toString()),
+              backgroundColor: kButtonColor,
+            ),
+            Text(
+              widget.question,
+              style: const TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
