@@ -98,8 +98,9 @@ class _QuizScreenState extends State<QuizScreen> {
                             child: OptionsContainer(
                               lead: 'A',
                               optionText: ques?[cAnswer] ?? '',
-                              ansColor:
-                                  isColoured ? Colors.green : Colors.white,
+                              ansColor: isColoured
+                                  ? Colors.green
+                                  : Colors.transparent,
                             ),
                           ),
                           const SizedBox(
@@ -113,7 +114,8 @@ class _QuizScreenState extends State<QuizScreen> {
                             child: OptionsContainer(
                               lead: 'B',
                               optionText: ques?[iAnswer][0] ?? '',
-                              ansColor: isColoured ? Colors.red : Colors.white,
+                              ansColor:
+                                  isColoured ? Colors.red : Colors.transparent,
                             ),
                           ),
                           const SizedBox(
@@ -127,7 +129,8 @@ class _QuizScreenState extends State<QuizScreen> {
                             child: OptionsContainer(
                               lead: 'C',
                               optionText: ques?[iAnswer][1] ?? '',
-                              ansColor: isColoured ? Colors.red : Colors.white,
+                              ansColor:
+                                  isColoured ? Colors.red : Colors.transparent,
                             ),
                           ),
                           const SizedBox(
@@ -142,7 +145,8 @@ class _QuizScreenState extends State<QuizScreen> {
                             child: OptionsContainer(
                               lead: 'D',
                               optionText: ques?[iAnswer][2] ?? '',
-                              ansColor: isColoured ? Colors.red : Colors.white,
+                              ansColor:
+                                  isColoured ? Colors.red : Colors.transparent,
                             ),
                           ),
                         ],
@@ -156,7 +160,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         backgroundColor: MaterialStateColor.resolveWith(
                             (states) => kButtonColor),
                       ),
-                      onPressed: questionNumber <= 5
+                      onPressed: questionNumber <= 4
                           ? () {
                               setState(() {
                                 q++;
@@ -164,16 +168,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                 b++;
                                 c++;
                                 questionNumber++;
+                                isColoured = false;
                                 assignQuestion();
                               });
                             }
                           : () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return const ResultScreen();
+                                return  ResultScreen(score: score,);
                               }));
                             },
-                      child: questionNumber <= 5
+                      child: questionNumber <= 4
                           ? const Text(
                               'Next Question',
                               style:

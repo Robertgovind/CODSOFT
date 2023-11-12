@@ -23,9 +23,10 @@ class _OptionsContainerState extends State<OptionsContainer> {
         decoration: BoxDecoration(
           border: Border.all(width: 3, color: Colors.purple),
           borderRadius: BorderRadius.circular(25),
+          color: widget.ansColor,
         ),
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding:const  EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Row(
             children: [
               CircleAvatar(
