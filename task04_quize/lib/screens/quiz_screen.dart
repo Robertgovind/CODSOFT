@@ -19,23 +19,22 @@ class _QuizScreenState extends State<QuizScreen> {
   bool decideScreen = false;
   var res;
   String question = '';
-  int questionNumber = 0;
+  int questionNumber = 1;
 
   String cAnswer = 'correct_answer';
   String iAnswer = 'incorrect_answers';
 
-  Map<String, dynamic>? ques;
+  List<Map> data = [];
 
   int q = 0, a = 0, b = 0, c = 0;
 
-  bool isColoured = false;
   int score = 0;
 
   @override
   void initState() {
     super.initState();
     getQuestions();
-    assignQuestion();
+
     setState(() {});
   }
 
@@ -44,20 +43,44 @@ class _QuizScreenState extends State<QuizScreen> {
       Uri.parse('https://opentdb.com/api.php?amount=10&type=multiple'),
     );
     res = jsonDecode(response.body);
-    print(response.body);
+    question = res['results'][q]['question'];
 
+    data.add({'${iAnswer}1': res['results'][q][iAnswer][0]});
+    data.add({'${iAnswer}2': res['results'][q][iAnswer][1]});
+    data.add({'${iAnswer}3': res['results'][q][iAnswer][2]});
+    data.add({cAnswer: res['results'][q][cAnswer]});
+    data.shuffle();
     decideScreen = true;
 
     setState(() {});
   }
 
   void assignQuestion() {
-    if (res != null) {
-      question = res['results'][q]['question'];
-      ques = {iAnswer: res['results'][a][iAnswer]};
-      ques?.addAll({cAnswer: res['results'][q][cAnswer]});
-    }
+    question = res['results'][q]['question'];
+    data.add({'${iAnswer}1': res['results'][q][iAnswer][0]});
+    data.add({'${iAnswer}2': res['results'][q][iAnswer][1]});
+    data.add({'${iAnswer}3': res['results'][q][iAnswer][2]});
+    data.add({cAnswer: res['results'][q][cAnswer]});
+    data.shuffle();
     setState(() {});
+  }
+
+  bool optA = false;
+  bool optB = false;
+  bool optC = false;
+  bool optD = false;
+  var ansColorA = const Color.fromARGB(255, 168, 54, 244);
+  var ansColorB = const Color.fromARGB(255, 168, 54, 244);
+  var ansColorC = const Color.fromARGB(255, 168, 54, 244);
+  var ansColorD = const Color.fromARGB(255, 168, 54, 244);
+
+  Color checkAnswer(Map submittedAns) {
+    if (submittedAns.containsKey(cAnswer)) {
+      score += 10;
+      return Colors.green;
+    } else {
+      return Colors.red;
+    }
   }
 
   @override
@@ -91,16 +114,14 @@ class _QuizScreenState extends State<QuizScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              isColoured = !isColoured;
-                              score += 10;
+                              print(data[0].keys);
+                              ansColorA = checkAnswer(data[0]);
                               setState(() {});
                             },
                             child: OptionsContainer(
                               lead: 'A',
-                              optionText: ques?[cAnswer] ?? '',
-                              ansColor: isColoured
-                                  ? Colors.green
-                                  : Colors.transparent,
+                              optionText: data[0].values.toString(),
+                              ansColor: ansColorA,
                             ),
                           ),
                           const SizedBox(
@@ -108,14 +129,13 @@ class _QuizScreenState extends State<QuizScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              isColoured = !isColoured;
+                              ansColorB = checkAnswer(data[1]);
                               setState(() {});
                             },
                             child: OptionsContainer(
                               lead: 'B',
-                              optionText: ques?[iAnswer][0] ?? '',
-                              ansColor:
-                                  isColoured ? Colors.red : Colors.transparent,
+                              optionText: data[1].values.toString(),
+                              ansColor: ansColorB,
                             ),
                           ),
                           const SizedBox(
@@ -123,14 +143,13 @@ class _QuizScreenState extends State<QuizScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              isColoured = !isColoured;
+                              ansColorC = checkAnswer(data[2]);
                               setState(() {});
                             },
                             child: OptionsContainer(
                               lead: 'C',
-                              optionText: ques?[iAnswer][1] ?? '',
-                              ansColor:
-                                  isColoured ? Colors.red : Colors.transparent,
+                              optionText: data[2].values.toString(),
+                              ansColor: ansColorC,
                             ),
                           ),
                           const SizedBox(
@@ -138,15 +157,13 @@ class _QuizScreenState extends State<QuizScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              isColoured = !isColoured;
-
+                              ansColorD = checkAnswer(data[3]);
                               setState(() {});
                             },
                             child: OptionsContainer(
                               lead: 'D',
-                              optionText: ques?[iAnswer][2] ?? '',
-                              ansColor:
-                                  isColoured ? Colors.red : Colors.transparent,
+                              optionText: data[3].values.toString(),
+                              ansColor: ansColorD,
                             ),
                           ),
                         ],
@@ -164,18 +181,29 @@ class _QuizScreenState extends State<QuizScreen> {
                           ? () {
                               setState(() {
                                 q++;
-                                a++;
-                                b++;
-                                c++;
                                 questionNumber++;
-                                isColoured = false;
+                                data.removeRange(0, data.length - 1);
+                                optA = false;
+                                optB = false;
+                                optC = false;
+                                optD = false;
+                                ansColorA =
+                                    const Color.fromARGB(255, 168, 54, 244);
+                                ansColorB =
+                                    const Color.fromARGB(255, 168, 54, 244);
+                                ansColorC =
+                                    const Color.fromARGB(255, 168, 54, 244);
+                                ansColorD =
+                                    const Color.fromARGB(255, 168, 54, 244);
                                 assignQuestion();
                               });
                             }
                           : () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return  ResultScreen(score: score,);
+                                return ResultScreen(
+                                  score: score,
+                                );
                               }));
                             },
                       child: questionNumber <= 4

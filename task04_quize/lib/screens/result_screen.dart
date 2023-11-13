@@ -66,7 +66,7 @@ class ResultScreen extends StatelessWidget {
                   }));
                 },
                 child: const Text(
-                  'Next Question',
+                  'Next Round',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
