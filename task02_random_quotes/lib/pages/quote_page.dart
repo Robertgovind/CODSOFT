@@ -21,7 +21,7 @@ class _QuotesPageState extends State<QuotesPage> {
   var quotes;
   bool isBookmarked = false;
   String savedQuote = '';
-  List<String>? favQuotes ;
+  List<String>? favQuotes;
 
   void toggleBookmarked() {
     setState(() {
@@ -64,23 +64,6 @@ class _QuotesPageState extends State<QuotesPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Quote of the day'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Random Quote'),
-                      ),
-                    ],
-                  )),
               Container(
                 padding: const EdgeInsets.all(
                   (25),
