@@ -37,7 +37,8 @@ class ResultScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Congratulation!!',
-                    style: TextStyle(fontSize: 40, color: Colors.green),
+                    style: TextStyle(
+                        fontSize: 42, color: Color.fromARGB(255, 57, 174, 61)),
                   ),
                   Text(
                     '$score/50',
