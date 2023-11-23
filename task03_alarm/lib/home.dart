@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
             colors: [Colors.purple, Colors.pink, Colors.blueAccent],
           ),
         ),
-        child: Column(
+        child:const Column(
           children: [
             AlarmContainer(),
           ],
