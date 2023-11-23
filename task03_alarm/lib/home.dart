@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
             colors: [Colors.purple, Colors.pink, Colors.blueAccent],
           ),
         ),
-        child:const Column(
+        child: Column(
           children: [
             AlarmContainer(),
           ],
@@ -85,28 +85,79 @@ class _HomeState extends State<Home> {
   }
 }
 
-class AlarmContainer extends StatelessWidget {
-  const AlarmContainer({
+// ignore: must_be_immutable
+class AlarmContainer extends StatefulWidget {
+  AlarmContainer({
     super.key,
   });
 
+  bool isActivated = true;
+  void toggle() {
+    isActivated = !isActivated;
+  }
+
+  @override
+  State<AlarmContainer> createState() => _AlarmContainerState();
+}
+
+class _AlarmContainerState extends State<AlarmContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.blueAccent),
-      height: 150,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(width: 1)),
       width: double.infinity,
-      child: Text(
-        'Time',
-        style: GoogleFonts.raleway(
-          fontSize: 18,
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1,
-          height: 18,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      '6:30',
+                      style: GoogleFonts.raleway(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2),
+                    ),
+                    Text(
+                      'am',
+                      style: GoogleFonts.raleway(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 2),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 0,
+                ),
+                Text(
+                  'Daily',
+                  style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 2),
+                ),
+              ],
+            ),
+          ),
+          Switch(
+            value: widget.isActivated,
+            onChanged: (bool val) {
+              widget.toggle();
+              setState(() {});
+            },
+            activeColor: Colors.blueAccent,
+            inactiveThumbColor: Colors.grey,
+          ),
+        ],
       ),
     );
   }
